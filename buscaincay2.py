@@ -26,10 +26,8 @@ print(len(df_interes['FACTURA']))
 print(str(mypath.split('/')[-1]))
 
 
-
 #Nombre de la carpeta = Destino
-
-folder_newname = 'destino'
+folder_newname = 'nombre_e' + '_renombrados'
 def crear_carpeta(ruta):
     ruta_nueva = os.path.join(ruta, folder_newname)
     os.mkdir(ruta_nueva)
@@ -99,10 +97,7 @@ def iniciador(data_excel, filenames, ruta):
             cambiarnombre('nohay', elemento, archivo, ruta, esta=False)
         print(i, elemento)
         #if elemento == '' or i > len(filenames):
-            #break
-
-
-            
+            #break          
 
 iniciador(df_interes, filenames, mypath)
 
