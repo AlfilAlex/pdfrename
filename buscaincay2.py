@@ -13,10 +13,19 @@ mypath = askdirectory() # show an "Open" dialog box and return the path to the s
 (_, _, filenames) = next(walk(mypath))             #Se obtiene le nombre de cualquier archivo o carpeta
 filenames = [x.split('.')[0] for x in filenames if '.pdf' in x or '.PDF' in x]        #Seleccion de pdfs
 print(len(filenames))
+nombre_e = str(mypath.split('/')[-1])
+nombre_final = nombre_e + '_hiperb.xlsx'
 
 ruta_excel_original = askopenfilename() 
-df_interes = pd.read_excel(ruta_excel_original, sheet_name = 'Sheet1')
+df_interes = pd.read_excel(ruta_excel_original, 
+                            sheet_name = nombre_e, 
+                            header=5, 
+                            usecols='A:F',
+                            index_col=0).dropna(axis=0, how='all')
 print(len(df_interes['FACTURA']))
+print(str(mypath.split('/')[-1]))
+
+
 
 #Nombre de la carpeta = Destino
 
@@ -69,7 +78,8 @@ def iniciador(data_excel, filenames, ruta):
             #os.system('clear')
             control += 1
             if control <= 100:
-                print('Avance: '+ control*'|' + str(control) + '%')                
+                #print('Avance: '+ control*'|' + str(control) + '%') 
+                pass              
             else: 
                 print('Avance: '+ 100*'|' + str(100) + '%')
                 
@@ -77,7 +87,7 @@ def iniciador(data_excel, filenames, ruta):
         for archivo in filenames:               #Tiene los nombres de los archivos en carpeta        
             string = str(archivo) + '$'   
             
-            if re.findall(string, str(elemento)):            #Elemento: del excel     #archivo: de la carpeta
+            if re.findall(string.replace('-', ''), str(elemento).replace('-', '')):            #Elemento: del excel     #archivo: de la carpeta
                 i +=1            
                 cambiarnombre(i, str(elemento), archivo, ruta)
                 bandera = True
@@ -97,5 +107,5 @@ def iniciador(data_excel, filenames, ruta):
 iniciador(df_interes, filenames, mypath)
 
 df_interes['Hypervinculos'] = hiperlins
-df_interes.to_excel('intento3.xlsx')
+df_interes.to_excel(nombre_final)
 
