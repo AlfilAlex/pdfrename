@@ -15,11 +15,8 @@ class incay_facturas():
         self.nombre_e = 'None'
         self.hiperlins = []
         self.folder_newname = 'None'
-        #Aun estoy viendo qué onda
-        #nombre_final = self.nombre_e + '_hiperb.xlsx'
-        #folder_newname = self.nombre_e + '_renombrados'
-        
-
+        self.parecido = []
+    
     def mypath_func(self):
         Tk().withdraw() # que no aparezca la ventana
         path = askdirectory() # regresa la ruta
@@ -55,9 +52,13 @@ class incay_facturas():
     #Despues lo manda a la función que crea una nueva columna
     def cambiarnombre(self, i, elemento, archivo, ruta, esta=True):
         if esta:
-            print('Esamos en la ruta: ', ruta)
+            self.parecido.append((elemento, archivo))
+        else:
+            self.parecido.append((elemento, 'MAL'))
+
+        if esta:
             nombre = str(i) + '-' + str(archivo) + '.pdf'
-            nuevo_nombre = ruta + str(self.folder_newname) + nombre    #ruta y nombre del documento nuevo
+            nuevo_nombre = ruta + '/' +str(self.folder_newname) + '/' + nombre    #ruta y nombre del documento nuevo
             try:
                 antiguo_archivo = ruta + '/' + str(archivo) + '.pdf' # ruta y nombre del doc antiguo
                 shutil.copy2(antiguo_archivo, nuevo_nombre)
@@ -110,15 +111,10 @@ class incay_facturas():
                 i +=1
                 self.cambiarnombre('nohay', elemento, archivo, mypath, esta=False)
             #print(i, elemento)
+        self.volcado()
 
-            def volcado(self):
-                nombre_final = self.nombre_e + '_hiperb.xlsx'
-                self.df_interes['Hypervinculos'] = hiperlins
-                self.df_interes.to_excel(nombre_final)
-
-
-#iniciador(df_interes, filenames, mypath)
-#nombre_final = nombre_e + '_hiperb.xlsx'
-#df_interes['Hypervinculos'] = hiperlins
-#df_interes.to_excel(nombre_final)
-
+    def volcado(self):
+        nombre_final = self.mypath + '/' +str(self.folder_newname) + '/' +self.nombre_e + '_hiperb.xlsx'
+        self.df_interes['Hypervinculos'] = self.hiperlins
+        self.df_interes.to_excel(nombre_final)
+        

@@ -2,10 +2,9 @@ from tkinter import *
 from buscaincay2 import incay_facturas
 #from buscaincay2 import carpeta_madre
 
-
-
 root = Tk()
-root.geometry('170x300')
+root.geometry('270x300')
+root.title('Programa_INCAY')
 
 facturas = incay_facturas()
 
