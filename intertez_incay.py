@@ -5,7 +5,7 @@ from buscaincay2 import incay_facturas
 
 
 root = Tk()
-root.geometry('400x300')
+root.geometry('170x300')
 
 facturas = incay_facturas()
 

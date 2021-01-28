@@ -25,7 +25,7 @@ class incay_facturas():
         path = askdirectory() # regresa la ruta
         (_, _, filenames) = next(walk(path))             #Se obtiene le nombre de cualquier archivo o carpeta
         filenames = [x.split('.')[0] for x in filenames if '.pdf' in x or '.PDF' in x]        #Seleccion de pdfs
-        self.mypath = path
+        self.mypath = str(path)
         self.filenames = filenames
         self.nombre_e = str(self.mypath.split('/')[-1])
         self.folder_newname = self.nombre_e + '_renombrados'
@@ -53,24 +53,25 @@ class incay_facturas():
 
     #crea un nombre y crea un archivo en una ruta nueva con el nombre
     #Despues lo manda a la función que crea una nueva columna
-    def cambiarnombre(i, elemento, archivo, ruta, esta=True):
+    def cambiarnombre(self, i, elemento, archivo, ruta, esta=True):
         if esta:
+            print('Esamos en la ruta: ', ruta)
             nombre = str(i) + '-' + str(archivo) + '.pdf'
-            nuevo_nombre = ruta + '/destino/' + nombre    #ruta y nombre del documento nuevo
+            nuevo_nombre = ruta + str(self.folder_newname) + nombre    #ruta y nombre del documento nuevo
             try:
                 antiguo_archivo = ruta + '/' + str(archivo) + '.pdf' # ruta y nombre del doc antiguo
                 shutil.copy2(antiguo_archivo, nuevo_nombre)
-                nuevacolumna(nuevo_nombre, elemento) #mandalo a nueva columna
+                self.nuevacolumna(nuevo_nombre, elemento) #mandalo a nueva columna
             except:
                 antiguo_archivo = ruta + '/' + str(archivo) + '.PDF'
                 shutil.copy2(antiguo_archivo, nuevo_nombre)
-                nuevacolumna(nuevo_nombre, elemento) #mandalo a nueva columna    
+                self.nuevacolumna(nuevo_nombre, elemento) #mandalo a nueva columna    
         else:
-            nuevacolumna('nohay', elemento, esta=False) #mandalo a nueva columna
+            self.nuevacolumna('nohay', elemento, esta=False) #mandalo a nueva columna
             
     #Crea una nueva columna con los hyperlinks    
     #hiperlins = []
-    def nuevacolumna(path, elemento, esta=True):
+    def nuevacolumna(self, path, elemento, esta=True):
         if esta:
             self.hiperlins.append('=HYPERLINK("'+path+'","'+str(elemento)+'")')
         else:
@@ -109,6 +110,12 @@ class incay_facturas():
                 i +=1
                 self.cambiarnombre('nohay', elemento, archivo, mypath, esta=False)
             #print(i, elemento)
+
+            def volcado(self):
+                nombre_final = self.nombre_e + '_hiperb.xlsx'
+                self.df_interes['Hypervinculos'] = hiperlins
+                self.df_interes.to_excel(nombre_final)
+
 
 #iniciador(df_interes, filenames, mypath)
 #nombre_final = nombre_e + '_hiperb.xlsx'
