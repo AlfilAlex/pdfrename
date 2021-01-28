@@ -18,8 +18,6 @@ class iniciador():
         folder_newname = 'nombre_e' + '_renombrados'
         hiperlins = []
 
-
-
     def mypath():
         Tk().withdraw() # que no aparezca la ventana
         mypath = askdirectory() # regresa la ruta
