@@ -9,9 +9,9 @@ from tkinter.filedialog import askdirectory, askopenfilename
 #Creo clase y en init deben estar mypath, filenames y df
 class incay_facturas():
     def __init__(self):
-        self.mypath = None
-        self.filenames = None
-        self.df_interes = None
+        self.mypath = 'None'
+        self.filenames = 'None'
+        self.df_interes = 'None'
         self.nombre_e = 'None'
         self.hiperlins = []
         self.folder_newname = 'None'
@@ -39,24 +39,16 @@ class incay_facturas():
     def iniciador(self):
         self.comparador(self.df_interes, self.filenames, self.mypath)
         
-
-    #Nombre de la carpeta = Destino
-    #folder_newname = 'nombre_e' + '_renombrados'
     def crear_carpeta(self, ruta):
         ruta_nueva = os.path.join(ruta, self.folder_newname)
         os.mkdir(ruta_nueva)
-        #print('Se creo una nueva carpeta destino')
-
 
     #crea un nombre y crea un archivo en una ruta nueva con el nombre
     #Despues lo manda a la función que crea una nueva columna
     def cambiarnombre(self, i, elemento, archivo, ruta, esta=True):
-        if esta:
-            self.parecido.append((elemento, archivo))
-        else:
-            self.parecido.append((elemento, 'MAL'))
 
         if esta:
+            self.parecido.append((elemento, archivo))
             nombre = str(i) + '-' + str(archivo) + '.pdf'
             nuevo_nombre = ruta + '/' +str(self.folder_newname) + '/' + nombre    #ruta y nombre del documento nuevo
             try:
@@ -68,10 +60,10 @@ class incay_facturas():
                 shutil.copy2(antiguo_archivo, nuevo_nombre)
                 self.nuevacolumna(nuevo_nombre, elemento) #mandalo a nueva columna    
         else:
+            self.parecido.append((elemento, '<- No esta el pdf'))
             self.nuevacolumna('nohay', elemento, esta=False) #mandalo a nueva columna
             
     #Crea una nueva columna con los hyperlinks    
-    #hiperlins = []
     def nuevacolumna(self, path, elemento, esta=True):
         if esta:
             self.hiperlins.append('=HYPERLINK("'+path+'","'+str(elemento)+'")')
@@ -117,4 +109,9 @@ class incay_facturas():
         nombre_final = self.mypath + '/' +str(self.folder_newname) + '/' +self.nombre_e + '_hiperb.xlsx'
         self.df_interes['Hypervinculos'] = self.hiperlins
         self.df_interes.to_excel(nombre_final)
+        for elemento in self.parecido:
+            print(elemento)
+
+    #def comparador(self):
+        #print(self.parecido)
         
