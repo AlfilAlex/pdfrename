@@ -1,4 +1,5 @@
-from tkinter import *
+#from tkinter import *
+from tkinter import Tk 
 from buscaincay2 import incay_facturas
 #from buscaincay2 import carpeta_madre
 
@@ -36,8 +37,8 @@ boton_archivo.grid(row=1, column=0, padx=20, pady=30)
 boton_iniciar = Button(frame, text='Iniciar proceso', command=inicia_programa)
 boton_iniciar.grid(row=2, column=0, pady=30, columnspan=2)
 
-boton_imprimir = Button(frame, text='Buscar excel', command=imprimir)
-boton_imprimir.grid(row=3, column=0, padx=20, pady=30)
+#boton_imprimir = Button(frame, text='Buscar excel', command=imprimir)
+#boton_imprimir.grid(row=3, column=0, padx=20, pady=30)
 
 cerrar = Button(frame, text='Cerrar', command=root.destroy)
 cerrar.grid(row=4, column=0, padx=20, pady=30)
