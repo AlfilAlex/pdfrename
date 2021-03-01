@@ -8,6 +8,12 @@ from tkinter.filedialog import askdirectory, askopenfilename
 
 #Creo clase y en init deben estar mypath, filenames y df
 class incay_facturas():
+    """Esta clase tiene los metodos necesarios para comparar el nombre de los archivos
+    PDF de una carpeta con los nombres de una columna de un archivo CSV o XLSX (con nombres 
+    parecidos a los de los PDFs). Posteriormente hace una copia de los archivos con el nombre
+    correspondiente al CSV o XLSX en una nueva carpeta. Por ultimo genera un Excel con
+    las asignaciones correspondientes y una columna con un hypervinculo hacia el nuevo
+    archivo renombrado"""
     def __init__(self):
         self.mypath = None
         self.filenames = None
@@ -18,6 +24,8 @@ class incay_facturas():
         self.parecido = []
     
     def mypath_func(self):
+        """Define donde se encuentra la carpeta con los PDFs y guarda los nombres de estos
+        archivos. Por ultimo crea una carpeta donde guardará los nuevos archivos renombrados"""
         Tk().withdraw() # que no aparezca la ventana
         path = askdirectory() # regresa la ruta
         (_, _, filenames) = next(walk(path))    #Se obtiene le nombre de cualquier archivo o carpeta
@@ -37,6 +45,7 @@ class incay_facturas():
 
     def iniciador(self):
         self.comparador()
+        return self.hiperlinks
         
     def crear_carpeta(self, ruta):
         ruta_nueva = os.path.join(ruta, self.new_folder)
