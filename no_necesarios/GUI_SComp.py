@@ -4,6 +4,7 @@ from buscaincay2 import incay_facturas
 #from buscaincay2 import carpeta_madre
 
 root = Tk()
+#root.geometry('270x500')
 root.title('Programa_INCAY')
 
 facturas = incay_facturas()
@@ -14,12 +15,9 @@ def buscacarpeta():
 def buscaexcel():
     facturas.dataframe()
 def inicia_programa():
-
     lista = facturas.iniciador()
-    root.quit()
-    # for elemento in lista:
-    #     cuadro_text.insert(END, ', '.join(elemento[0:2]) + '\n')   
-
+    for elemento in lista:
+        cuadro_text.insert(END, ', '.join(elemento[0:2]) + '\n')    
 
 
 
@@ -39,13 +37,12 @@ boton_iniciar.grid(row=2, column=0, pady=30)
 cerrar = Button(frame, text='Cerrar', command=root.destroy)
 cerrar.grid(row=3, column=0, padx=20, pady=30)
 
-
-"""
 Frame_2 = Frame(frame)
 Frame_2.grid(row = 0, column = 1, rowspan = 4)
+
+
 cuadro_text = Text(Frame_2)
 cuadro_text.grid(row = 0, column = 0, rowspan = 4, sticky=E + N)
-cuadro_text.grid_propagate(False) 
-"""
+cuadro_text.grid_propagate(False)
 
 root.mainloop()

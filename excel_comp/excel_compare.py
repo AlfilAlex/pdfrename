@@ -34,3 +34,9 @@ print('La lista de incompletos')
 for elemento in infaltantes:
     print(elemento)
 
+
+
+
+
+
+
